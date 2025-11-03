@@ -1,8 +1,7 @@
 package com.microservice.product_service2.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
@@ -11,11 +10,20 @@ import java.time.LocalDateTime;
 public class Product {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Product name is required")
     private String name;
 
-    private int quantity;
+    @NotNull(message = "Price is required")
+    @Positive(message = "Price must be positive")
+    private Double price;
+
+
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    private Integer quantity;
 
     private LocalDateTime created_at;
 
@@ -23,6 +31,17 @@ public class Product {
 
     private boolean isAvalaible;
 
+    @PrePersist
+    protected void onCreate() {
+        this.created_at = LocalDateTime.now();
+        this.updated_at = LocalDateTime.now();
+        this.isAvalaible = true;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updated_at = LocalDateTime.now();
+    }
     public long getId() {
         return id;
     }
@@ -69,5 +88,13 @@ public class Product {
 
     public void setAvalaible(boolean avalaible) {
         isAvalaible = avalaible;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
