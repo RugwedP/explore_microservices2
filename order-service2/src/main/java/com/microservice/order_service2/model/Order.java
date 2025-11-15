@@ -13,10 +13,25 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
 
     @ElementCollection
     private List<Integer> productIds;
+
+
+    private int userId;
+
+    public enum OrderStatus {
+
+        PENDING,
+        COMPLETED,
+        CANCELLED
+    }
+
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+
 
     private LocalDateTime created_at;
 
@@ -30,13 +45,7 @@ public class Order {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public List<Integer> getProductIds() {
         return productIds;
@@ -60,6 +69,22 @@ public class Order {
 
     public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
     @PrePersist
