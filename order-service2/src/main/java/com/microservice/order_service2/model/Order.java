@@ -15,7 +15,7 @@ public class Order {
 
 
     @ElementCollection
-    private List<Integer> productIds;
+    private List<OrderItem> items;
 
 
     private int userId;
@@ -25,6 +25,29 @@ public class Order {
         PENDING,
         COMPLETED,
         CANCELLED
+    }
+
+    @Embeddable
+    public static class  OrderItem
+    {
+        private int productId;
+        private int qty;
+
+        public int getProductId() {
+            return productId;
+        }
+
+        public void setProductId(int productId) {
+            this.productId = productId;
+        }
+
+        public int getQty() {
+            return qty;
+        }
+
+        public void setQty(int qty) {
+            this.qty = qty;
+        }
     }
 
 
@@ -46,13 +69,12 @@ public class Order {
     }
 
 
-
-    public List<Integer> getProductIds() {
-        return productIds;
+    public List<OrderItem> getItems() {
+        return items;
     }
 
-    public void setProductIds(List<Integer> productIds) {
-        this.productIds = productIds;
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 
     public LocalDateTime getCreated_at() {
@@ -92,6 +114,7 @@ public class Order {
     {
         this.created_at = LocalDateTime.now();
         this.updated_at = LocalDateTime.now();
+        this.status = OrderStatus.PENDING;
     }
 
     @PreUpdate

@@ -21,6 +21,6 @@ public class ProductService {
     }
 
     public Product fetchProduct(long id) {
-        return productRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Product not found"));
+        return productRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("Product not found with id :"+id));
     }
 }
