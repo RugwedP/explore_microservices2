@@ -27,7 +27,7 @@ public class OrderService {
 
         System.out.println(order.getUserId());
         String url = "http://localhost:8091/user/fetch/"+order.getUserId();
-        Object data = null;
+
         try
         {
             ResponseEntity<Object> user_response = restTemplate.exchange(
